@@ -2,27 +2,12 @@ const DELAY_IN_MS = 3000;
 const VIDEO_LENGTH_IN_MS = 20000;
 const MAX_Z_INDEX = 2147483647;
 
-const SHOULD_CENAFY = Math.floor(Math.random() * 100) === 69;
+const SHOULD_PONEFY = Math.floor(Math.random() * 100) === 69;
 
 let hasLearnedWhoTheChampIs = false;
 let timeoutId;
 
-function getCenafyVideo() {
-  const video = document.createElement("video");
-  video.src = chrome.runtime.getURL("cena.mp4");
-  Object.assign(video.style, {
-    position: "fixed",
-    background: "black",
-    zIndex: MAX_Z_INDEX,
-    height: "100vh",
-    width: "100vw",
-    inset: 0,
-  });
-
-  return video;
-}
-
-function cenafy() {
+function ponefy() {
   if (hasLearnedWhoTheChampIs) {
     return;
   }
@@ -41,34 +26,25 @@ function cenafy() {
       return;
     }
 
-    const body = document.body;
-    const previousPointerEvents = body.style.pointerEvents;
-    body.style.pointerEvents = "none";
-    const previousBackgroundColor = body.style.backgroundColor;
-    body.style.backgroundColor = "black";
-
-    const video = getCenafyVideo();
-    body.appendChild(video);
+    const url = chrome.runtime.getURL("poney.mp3");
+    const audio = new Audio(url);
 
     // Prevent future clicks from spawning additional videos while
     // this is playing. In theory, pointer-events: none should guard
     // against this but child nodes could have pointer-events set
     // explicitly
-    window.removeEventListener("mouseup", cenafy);
+    window.removeEventListener("mouseup", ponefy);
 
-    video.addEventListener("ended", () => {
-      body.style.backgroundColor = previousBackgroundColor;
-      body.style.pointerEvents = previousPointerEvents;
-      body.removeChild(video);
+    audio.addEventListener("ended", () => {
       hasLearnedWhoTheChampIs = true;
     });
 
-    video.play();
+    audio.play();
   }, DELAY_IN_MS);
 }
 
-if (SHOULD_CENAFY) {
+if (SHOULD_PONEFY) {
   // Add this to mouse-up instead of on load so we can auto-play
   // the video with sound
-  window.addEventListener("mouseup", cenafy);
+  window.addEventListener("mouseup", ponefy);
 }

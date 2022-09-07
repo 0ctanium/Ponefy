@@ -1,7 +1,7 @@
 {
-  "name": "Cenafy",
-  "version": "1.2.0",
-  "description": "And his name is John Cena",
+  "name": "Ponefy",
+  "version": "1.0.0",
+  "description": "Petit poney",
 
   "content_scripts": [
     {
@@ -12,7 +12,7 @@
 
   "web_accessible_resources": [
     {
-      "resources": ["cena.mp4"],
+      "resources": ["poney.mp3"],
       "matches": ["http://*/*", "https://*/*"]
     }
   ],
